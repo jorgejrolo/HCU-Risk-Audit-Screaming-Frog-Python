@@ -1,79 +1,76 @@
-# HCU Risk Audit – Screaming Frog + GPT
+# HCU Risk Audit – Screaming Frog + Python
 
-A Python/Google Colab notebook to **score and prioritize URLs** for Google's *Helpful Content Update (HCU)* risk using exports from Screaming Frog.  
-Designed for SEOs who want a **quick, data-driven way to identify and fix** potentially unhelpful content at scale.
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jorgejrolo/HCU-Risk-Audit-Screaming-Frog-Python/blob/main/hcu_risk_audit_screamingfrog.ipynb)
 
----
+## Overview
+This project scores and prioritizes website URLs for **Helpful Content Update (HCU) risk** using exports from **Screaming Frog SEO Spider**.  
+It’s designed for SEOs who want to quickly identify pages that might be impacted by Google’s HCU and take **data-driven corrective action**.
 
-## 🚀 Features
-- **CSV/XLSX input** from Screaming Frog (Internal_All.csv or custom export).
-- Calculates an **HCU Risk Score** (0–100) per URL based on multiple on-page & technical factors.
-- Flags key content quality issues:
-  - Thin content
-  - Orphaned pages
-  - Missing headings
-  - Weak meta descriptions
-  - Duplicate or missing canonicals
-- **Visual distribution chart** of HCU risk.
-- Exports a **prioritized list** of URLs for remediation.
-- Includes a **prompt template** to push the top 50 URLs into GPT for qualitative review.
+**Author:** Jorge J. Rolo  
+**Purpose:** Prioritize URLs by HCU risk using Screaming Frog exports.
 
 ---
 
-## 📂 Input Requirements
-Export from Screaming Frog containing at least these columns:
-- `Address`
-- `Word Count`
-- `Inlinks`
-- `Indexability`
-- `Meta Description 1`
-- `Canonical Link Element 1`
-- `H1-1`
-- `H2-1`
-
-**Accepted formats:** `.csv` or `.xlsx`
+## Features
+- 📊 **Risk scoring (0–100)** based on thin content, orphaned pages, lack of structure, and more.
+- 🔍 **High-impact fixes** list for immediate action.
+- 🤖 **GPT prompt template** to review the top 50 risky URLs qualitatively.
+- 📥 Supports **CSV and Excel** Screaming Frog exports.
+- ⚡ Fast, reproducible workflow in **Google Colab** or locally.
 
 ---
 
-## 📤 Output
-- **Dataframe** with all URLs and their `HCU_Risk` score.
-- **Shortlist** of top-priority URLs to fix.
-- CSV file `hcu_scored_urls.csv` with full results.
-- GPT prompt template for qualitative review.
+## Input
+Export from Screaming Frog in one of these formats:
+- **Internal_All.csv**
+- **Custom export** with these columns:
+  - `Address`
+  - `Title 1`
+  - `Meta Description 1`
+  - `Word Count`
+  - `H1-1`
+  - `H2-1`
+  - `Status Code`
+  - `Canonical Link Element 1`
+  - `Inlinks`
+  - `Outlinks`
+  - `Indexability`
+  - *(…other columns are optional but recommended)*
 
 ---
 
-## 📊 Example Output
-
-| Address                                | HCU_Risk | Word Count | Inlinks | H1 | H2 | Notes                          |
-|----------------------------------------|----------|------------|---------|----|----|--------------------------------|
-| https://example.com/thin-page          | 92       | 120        | 2       | ✅  | ❌  | Thin + low inlinks + no H2     |
-| https://example.com/duplicate-content  | 85       | 400        | 10      | ✅  | ✅  | Duplicate canonical detected   |
+## Output
+1. **Scored table** with `HCU_Risk` (0–100) and explanations.
+2. **Shortlist** of high-priority URLs to fix.
+3. **Prompt template** to send top 50 risky URLs to GPT for qualitative review.
 
 ---
 
-## ▶️ Run in Google Colab
+## How to Run
 
-Click the badge below to open and run the notebook directly in Colab:
+### Option 1: Google Colab (Recommended)
+1. Click the badge at the top of this README or [open this link](https://colab.research.google.com/github/jorgejrolo/HCU-Risk-Audit-Screaming-Frog-Python/blob/main/hcu_risk_audit_screamingfrog.ipynb)
+2. Upload your Screaming Frog export (CSV or XLSX).
+3. Run all cells and review the generated outputs.
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jorgejrolo/hcu-risk-audit/blob/main/hcu_risk_audit_screamingfrog.ipynb)
-
----
-
-## 🛠️ How to Use
-1. Open the notebook in Colab.
-2. Upload your Screaming Frog export (`.csv` or `.xlsx`).
-3. Run all cells.
-4. Review the **HCU Risk Distribution** chart.
-5. Download the prioritized list of URLs for fixes.
-6. Optionally, send the top 50 to GPT for qualitative content review.
-
----
-
-## 📦 Requirements
-> No local setup needed if using Colab.
-
-If running locally:
+### Option 2: Local Python Environment
 ```bash
-pip install pandas matplotlib openpyxl
+git clone https://github.com/jorgejrolo/HCU-Risk-Audit-Screaming-Frog-Python.git
+cd HCU-Risk-Audit-Screaming-Frog-Python
+pip install -r requirements.txt
+jupyter notebook hcu_risk_audit_screamingfrog.ipynb
+Example Output
+Address	HCU_Risk	Word Count	Inlinks	H1	H2	Notes
+https://example.com/page-1	92	120	1	Yes	No	Thin + orphan + no structure
+https://example.com/page-2	65	800	5	Yes	Yes	Solid but meta description missing
+
+Notes
+HCU Risk is a relative metric: higher scores = higher priority for review.
+
+The script does not make changes to your site — it only analyzes and prioritizes.
+
+You can tweak the scoring formula inside the notebook to fit your specific SEO context.
+
+License
+MIT License © 2025 Jorge J. Rolo
 
